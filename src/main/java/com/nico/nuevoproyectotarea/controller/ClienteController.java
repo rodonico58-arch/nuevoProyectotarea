@@ -16,6 +16,11 @@ public class ClienteController {
     private IClienteService clienteService;
 
     /**
+     Codigo del delete de clientes
+    **/
+
+
+    /**
      * Endpoint para dar de alta un nuevo cliente
      * POST /api/clientes
      */
