@@ -111,12 +111,25 @@ public class ProductoController {
     }
 
     /**
-     * DELETE /api/productos/{id} - Elimina un producto
+     * DELETE /api/productos/{id} - Marca un producto como inactivo (soft delete)
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
         try {
             productoService.eliminar(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * DELETE /api/productos/{id}/permanente - Elimina un producto permanentemente de la BD
+     */
+    @DeleteMapping("/{id}/permanente")
+    public ResponseEntity<Void> eliminarPermanente(@PathVariable Integer id) {
+        try {
+            productoService.eliminarPermanente(id);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();

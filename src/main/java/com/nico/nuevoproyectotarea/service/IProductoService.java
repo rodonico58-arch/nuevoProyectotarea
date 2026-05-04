@@ -51,9 +51,15 @@ public interface IProductoService {
     ProductoDTO actualizar(Integer id, ProductoDTO productoDTO);
 
     /**
-     * Elimina un producto
+     * Elimina un producto (soft delete - marca como inactivo)
      */
     void eliminar(Integer id);
+
+    /**
+     * Elimina permanentemente un producto de la base de datos
+     * Esta operación es irreversible y solo debe usarse en casos especiales
+     */
+    void eliminarPermanente(Integer id);
 
     /**
      * Verifica si un producto existe

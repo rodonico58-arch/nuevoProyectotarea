@@ -103,6 +103,23 @@ public class ProductoServiceImpl implements IProductoService {
 
     @Override
     public void eliminar(Integer id) {
+        Optional<Producto> productoOptional = productoRepository.findById(id);
+
+        if (!productoOptional.isPresent()) {
+            throw new RuntimeException("Producto no encontrado con ID: " + id);
+        }
+
+        // Soft delete: marcar como inactivo en lugar de eliminar físicamente
+        Producto producto = productoOptional.get();
+        producto.setActivo(0);
+        productoRepository.save(producto);
+    }
+
+    /**
+     * Elimina permanentemente un producto de la base de datos
+     * Esta operación es irreversible y solo debe usarse en casos especiales
+     */
+    public void eliminarPermanente(Integer id) {
         if (!productoRepository.existsById(id)) {
             throw new RuntimeException("Producto no encontrado con ID: " + id);
         }
