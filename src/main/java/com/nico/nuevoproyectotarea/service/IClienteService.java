@@ -7,4 +7,5 @@ public interface IClienteService {
     ClienteDTO obtenerClientePorId(Integer id);
     ClienteDTO obtenerClientePorEmail(String email);
     ClienteDTO obtenerClientePorDni(String dni);
+    boolean eliminarCliente(Integer id);
 }

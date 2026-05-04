@@ -16,9 +16,26 @@ public class ClienteController {
     private IClienteService clienteService;
 
     /**
-     Codigo del delete de clientes
-    **/
-
+     * Endpoint para eliminar un cliente por ID
+     * DELETE /api/clientes/{id}
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminarCliente(@PathVariable Integer id) {
+        try {
+            boolean eliminado = clienteService.eliminarCliente(id);
+            if (eliminado) {
+                return ResponseEntity.ok("Cliente eliminado correctamente");
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Cliente no encontrado");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Error de validación: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al eliminar el cliente: " + e.getMessage());
+        }
+    }
 
     /**
      * Endpoint para dar de alta un nuevo cliente

@@ -43,6 +43,18 @@ public class ClienteServiceImpl implements IClienteService {
         return cliente != null ? clienteMapper.entityToDTO(cliente) : null;
     }
 
+    @Override
+    public boolean eliminarCliente(Integer id) {
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("El ID del cliente debe ser válido");
+        }
+        if (clienteRepository.existsById(id)) {
+            clienteRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
     private void validarClienteDTO(ClienteDTO clienteDTO) {
         if (clienteDTO.getNombre() == null || clienteDTO.getNombre().isEmpty()) {
             throw new IllegalArgumentException("El nombre del cliente es requerido");
